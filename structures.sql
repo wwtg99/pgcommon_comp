@@ -12,7 +12,6 @@
 CREATE TABLE tags (
 	tag_id SERIAL PRIMARY KEY,
 	tag_name TEXT UNIQUE NOT NULL,
-	descr TEXT,
 	created_by TEXT,
 	created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
@@ -44,7 +43,6 @@ CREATE INDEX ON comments (object_table, object_id);
 --accessories
 CREATE TABLE accessories (
 	accessory_id SERIAL PRIMARY KEY,
-	label TEXT,
 	mime TEXT,
 	content BYTEA,
 	file_path TEXT,
@@ -83,7 +81,7 @@ FROM accessories AS a JOIN object_accessories AS o
 ON a.accessory_id = o.accessory_id;
 
 CREATE OR REPLACE VIEW view_tags AS 
-SELECT o.id, object_table, object_id, t.tag_id, tag_name, descr,  
+SELECT o.id, object_table, object_id, t.tag_id, tag_name,  
 o.created_by, o.created_at 
 FROM tags AS t JOIN object_tags AS o ON t.tag_id = o.tag_id;
 
